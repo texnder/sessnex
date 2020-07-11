@@ -50,11 +50,15 @@ class SessionManager
 
 		$this->file = (object) include $config_file;
 
+		$this->loginUrl();
+		$this->logoutUrl();
 		$this->initialize();
 
 		session_set_save_handler(self::$instance, true);
 		session_start();
 
+		$_SESSION['_token'] = $this->generateToken();
+		
 		$this->checkCookieCreadentials();
 
 	}
@@ -113,6 +117,32 @@ class SessionManager
 	public function invokeDatabaseHandler()
 	{
 		self::$instance = new DatabasePersistentLogin($this);
+	}
+
+
+	/**
+	 * set user login url for application..
+	 *
+	 * @return null
+	 */
+	public function loginUrl()
+	{
+		if (isset($this->file->login) && $this->file->login) {
+			define("USER_LOGIN", $this->file->login);
+		}
+	}
+
+	/**
+	 * set user logout url for application..
+	 *
+	 * @return null
+	 */
+	public function logoutUrl()
+	{
+
+		if (isset($this->file->logout) && $this->file->logout) {
+			define("USER_LOGOUT", $this->file->logout);
+		}
 	}
 
 	/**

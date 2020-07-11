@@ -1,41 +1,28 @@
 <?php
 
 use sessnex\persistent\persistentTrait;
+use bootex\Middelware;
+use sessnex\exception\ConfigurationException;
 
-
-class Auth
+/**
+ * its a middelware class which handler method execute before 
+ * response delivery to client
+ */
+class Auth extends Middelware
 {
 
 	use persistentTrait;
 
-	public static function user($username = null)
+	public function handler()
 	{
-		if (!$username) {
-			if (isset($_SESSION[$this->sess_auth]) && $_SESSION[$this->sess_auth]) {
-				return $_SESSION[$this->sess_username];
-			}
-		}else{
-			if (isset($_SESSION[$this->sess_username]) && $_SESSION[$this->sess_username] === $username) {
-					return isset($_SESSION[$this->sess_auth]) ? $_SESSION[$this->sess_auth] : null;
-			}
+
+		if (! $this->checkLoginStatus()) {
+			if (defined("USER_LOGIN")) {
+				return redirect(USER_LOGIN);
+			}else
+				throw new ConfigurationException("this page needs user authorization, login url not set in sessnex config file!");
 		}
 	}
 
-	public static function login($username, $remember = false)
-	{
-		if (!isset($_SESSION[$this->sess_auth])) {
-			$_SESSION[$this->sess_auth] = true;
-			$_SESSION[$this->sess_username] = $username;
-			if ($remember) {
-				SessionManager::instance()->persistentLogin();
-			}
-		}
-	}
 
-	public static function logout()
-	{
-		if (isset($_SESSION[$this->sess_auth])) {	
-			SessionManager::instance()->trashLoginCreadentials();
-		}
-	}
 }
