@@ -1,6 +1,5 @@
 <?php
 
-use sessnex\persistent\persistentTrait;
 use bootex\Middelware;
 use sessnex\exception\ConfigurationException;
 
@@ -10,8 +9,6 @@ use sessnex\exception\ConfigurationException;
  */
 class Auth extends Middelware
 {
-
-	use persistentTrait;
 
 	public function handler()
 	{
