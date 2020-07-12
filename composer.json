@@ -15,7 +15,7 @@
         "texnder/bootex" : "1.0.*"
     },
 
-    "minimum-stability": "alpha",
+    "minimum-stability": "stable",
     "autoload": {
         "files" : [
             "Cookie.php",
