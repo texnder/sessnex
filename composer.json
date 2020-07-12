@@ -18,9 +18,9 @@
     "minimum-stability": "alpha",
     "autoload": {
         "files" : [
-            "Cookie.php"
+            "Cookie.php",
             "SessionManager.php",
-            "Auth.php",
+            "Auth.php"
         ],
 
         "psr-4": {
