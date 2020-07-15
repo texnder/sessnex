@@ -2,6 +2,8 @@
 
 namespace sessnex\persistent;
 
+use Cookie;
+
 trait persistentTrait
 {
 	/**
