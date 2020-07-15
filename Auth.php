@@ -13,7 +13,7 @@ class Auth extends bluff
 	public function handler()
 	{
 
-		if (! $this->checkLoginStatus()) {
+		if (! self::checkLoginStatus()) {
 			if (defined("USER_LOGIN")) {
 				return redirect(USER_LOGIN);
 			}else
